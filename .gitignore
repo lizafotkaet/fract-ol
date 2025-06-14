@@ -1,0 +1,6 @@
+*.o
+*.out
+*.exe
+*.d
+*.a
+mlx_linux/
