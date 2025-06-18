@@ -6,11 +6,11 @@
 /*   By: sergei_pilman <sergei_pilman@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/14 19:08:06 by sergei_pilm       #+#    #+#             */
-/*   Updated: 2025/06/14 19:14:52 by sergei_pilm      ###   ########.fr       */
+/*   Updated: 2025/06/18 05:48:33 by sergei_pilm      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft/libft.h"
+#include "../libft/libft.h"
 #include <mlx.h>
 #include <math.h>
 #include <stdbool.h>
