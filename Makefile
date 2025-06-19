@@ -4,10 +4,13 @@ LIBFT = $(LIBFT_DIR)/libft.a
 
 SRC_DIR = src
 OBJ_DIR = obj
-SRC = $(SRC_DIR)/main.c
+SRC = $(SRC_DIR)/main.c 
+SRC += $(SRC_DIR)/image_stuff.c
+SRC += $(SRC_DIR)/playground.c
+SRC += $(SRC_DIR)/events.c
 OBJ = $(patsubst $(SRC_DIR)/%.c,$(OBJ_DIR)/%.o,$(SRC))
 CC = gcc 
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror #-fsanitize=leak
 INCLUDES = -I./mlx_linux -I$(LIBFT_DIR)
 LIBS = -L./mlx_linux -lmlx -L$(LIBFT_DIR) -lft -lXext -lX11 -lm
 

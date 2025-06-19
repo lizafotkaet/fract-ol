@@ -6,11 +6,12 @@
 /*   By: ebarbash <ebarbash@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/28 12:50:43 by ebarbash          #+#    #+#             */
-/*   Updated: 2024/10/30 14:57:29 by ebarbash         ###   ########.fr       */
+/*   Updated: 2025/03/17 18:48:31 by ebarbash         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
+#include <stdio.h>
 
 char	*ft_substr(char const *s, unsigned int start, size_t len);
 

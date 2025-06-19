@@ -3,17 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   ft_lstnew.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sergei_pilman <sergei_pilman@student.42    +#+  +:+       +#+        */
+/*   By: ebarbash <ebarbash@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 13:04:56 by ebarbash          #+#    #+#             */
-/*   Updated: 2024/10/30 22:10:50 by sergei_pilm      ###   ########.fr       */
+/*   Updated: 2025/02/24 14:00:26 by ebarbash         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
 #include "libft.h"
 
-t_list	*ft_lstnew(void *content)
+t_list	*ft_lstnew(int content)
 {
 	t_list	*lst;
 
@@ -33,8 +33,8 @@ t_list	*ft_lstnew(void *content)
 // 	printf("%d\n", (int)lst->content);
 // 	printf("%p", lst->next);	
 // }
-
-
+//
+//
 // typedef struct s_list
 // {
 // 	void			*content;
