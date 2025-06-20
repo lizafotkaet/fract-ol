@@ -1,6 +1,6 @@
 NAME = fract-ol
 LIBFT_DIR = ./libft
-MLX_DIR = ./mlx
+MLX_DIR = ./MLX42
 MLX_INC = $(MLX_DIR)/include
 MLX_LIB = $(MLX_DIR)/build/libmlx42.a
 

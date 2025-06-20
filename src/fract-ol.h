@@ -3,15 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   fract-ol.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ebarbash <ebarbash@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sergei_pilman <sergei_pilman@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/14 19:08:06 by sergei_pilm       #+#    #+#             */
-/*   Updated: 2025/06/20 13:22:20 by ebarbash         ###   ########.fr       */
+/*   Updated: 2025/06/20 21:05:38 by sergei_pilm      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../libft/libft.h"
-#include <../mlx/include/MLX42/MLX42.h>
+#include <../MLX42/include/MLX42/MLX42.h>
 #include <math.h>
 #include <stdbool.h>
 #include <stdint.h>
