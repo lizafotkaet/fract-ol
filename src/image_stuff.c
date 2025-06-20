@@ -3,22 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   image_stuff.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sergei_pilman <sergei_pilman@student.42    +#+  +:+       +#+        */
+/*   By: ebarbash <ebarbash@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/18 13:36:33 by sergei_pilm       #+#    #+#             */
-/*   Updated: 2025/06/18 14:43:02 by sergei_pilm      ###   ########.fr       */
+/*   Updated: 2025/06/20 12:47:06 by ebarbash         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fract-ol.h"
-
-void	my_mlx_pixel_put(t_data *data, int x, int y, int color)
-{
-	char	*dst;
-
-	dst = data->addr + (y * data->line_length + x * (data->bits_per_pixel / 8));
-	*(unsigned int*)dst = color;
-}
 
 //to study further:
 int	create_transparent_gradient(int color1, int color2, float mix)
