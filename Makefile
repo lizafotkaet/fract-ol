@@ -9,12 +9,12 @@ LIBFT = $(LIBFT_DIR)/libft.a
 SRC_DIR = src
 OBJ_DIR = obj
 SRC = $(SRC_DIR)/main.c 
-SRC += $(SRC_DIR)/image_stuff.c
-SRC += $(SRC_DIR)/playground.c
+SRC += $(SRC_DIR)/fractal_stuff.c
 SRC += $(SRC_DIR)/events.c
+SRC += $(SRC_DIR)/complex_stuff.c
 OBJ = $(patsubst $(SRC_DIR)/%.c,$(OBJ_DIR)/%.o,$(SRC))
 CC = gcc 
-CFLAGS = -fsanitize=leak
+CFLAGS = 
 INCLUDES = -I$(MLX_INC) -I$(LIBFT_DIR)
 LIBS = -lmlx42 -ldl -lglfw -pthread -lm -L$(LIBFT_DIR) -L$(MLX_DIR)/build -lft 
 

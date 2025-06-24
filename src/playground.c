@@ -3,31 +3,40 @@
 /*                                                        :::      ::::::::   */
 /*   playground.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ebarbash <ebarbash@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sergei_pilman <sergei_pilman@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/18 14:38:00 by sergei_pilm       #+#    #+#             */
-/*   Updated: 2025/06/20 13:22:12 by ebarbash         ###   ########.fr       */
+/*   Updated: 2025/06/24 21:54:06 by sergei_pilm      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fract-ol.h"
 
-void	make_square(mlx_image_t* img, uint32_t x, uint32_t y, uint32_t size, uint32_t color)
-{
-	uint32_t nx;
-	uint32_t ny;
-	
-	nx = 0;
-	ny = 0;
+// Mika's function:
+// void	putpixel(mlx_image_t *img, uint32_t x, uint32_t y, uint32_t color)
+// {
+// 	uint32_t	*pixels;
 
-	while (nx < size)
-	{
-		while (ny < size)
-		{
-			putpixel(img, x + nx, y + ny, color);
-			ny++;
-		}
-		ny = y;
-		nx++;
-	}
-}
+// 	pixels = (uint32_t *)img->pixels;
+// 	pixels[y * img->width + x] = color;
+// }
+
+// void	make_square(mlx_image_t* img, uint32_t x, uint32_t y, uint32_t size, uint32_t color)
+// {
+// 	uint32_t nx;
+// 	uint32_t ny;
+	
+// 	nx = 0;
+// 	ny = 0;
+
+// 	while (nx < size)
+// 	{
+// 		while (ny < size)
+// 		{
+// 			putpixel(img, x + nx, y + ny, color);
+// 			ny++;
+// 		}
+// 		ny = y;
+// 		nx++;
+// 	}
+// }

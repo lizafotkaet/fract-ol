@@ -6,7 +6,7 @@
 /*   By: sergei_pilman <sergei_pilman@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/14 19:08:06 by sergei_pilm       #+#    #+#             */
-/*   Updated: 2025/06/20 21:05:38 by sergei_pilm      ###   ########.fr       */
+/*   Updated: 2025/06/24 21:58:12 by sergei_pilm      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,11 +20,20 @@
 #include <signal.h>
 #include <linux/types.h>
 
-typedef struct	s_vars 
+#define WIDTH 1024
+#define HEIGHT 1024
+
+typedef struct s_complex // comples number kek
 {
-	void	*mlx;
-	void	*win;
-}	t_vars;
+	double x;
+	double y;
+}	t_complex;
+
+typedef struct s_data // to store both mlx and img instances
+{
+	mlx_t *mlx;
+	mlx_image_t *img;
+}	t_data;
 
 enum
 {
@@ -37,7 +46,14 @@ enum
 	ON_DESTROY = 17
 };
 
-int		create_transparent_gradient(int color1, int color2, float mix);
-int 	close_win(t_vars *vars);
-void	putpixel(mlx_image_t *img, uint32_t x, uint32_t y, uint32_t color);
-void	make_square(mlx_image_t* img, uint32_t x, uint32_t y, uint32_t size, uint32_t color);
+int32_t 	ft_pixel(int32_t r, int32_t g, int32_t b, int32_t a);
+int			error_check(mlx_t **mlx, mlx_image_t **img);
+void		ft_hook(void* param);
+bool		is_mandelbrot(double x, double y, unsigned int n);
+void		put_fractal(mlx_t *mlx, mlx_image_t *img);
+
+// complex nums operations:
+t_complex	zero();
+t_complex	add_complex(t_complex c1, t_complex c2);
+t_complex	multiply_complex(t_complex c1, t_complex c2);
+double		abs_complex(t_complex c); // |c| = sqrt(x**2 + y**2) гипотенуза на плоскости комплексных чисел по факту

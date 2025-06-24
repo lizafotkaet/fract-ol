@@ -1,3 +1,1 @@
-1. gradient function(s)
-
-!!!RETURN FLAGS IN MAKEFILE
+1. replace puts()

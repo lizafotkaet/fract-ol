@@ -3,16 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   image_stuff.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ebarbash <ebarbash@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sergei_pilman <sergei_pilman@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/18 13:36:33 by sergei_pilm       #+#    #+#             */
-/*   Updated: 2025/06/20 12:47:06 by ebarbash         ###   ########.fr       */
+/*   Updated: 2025/06/24 21:43:45 by sergei_pilm      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fract-ol.h"
 
-//to study further:
+
+
+
+
+
 int	create_transparent_gradient(int color1, int color2, float mix)
 {
 	int	r;
