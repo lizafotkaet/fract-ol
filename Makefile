@@ -14,7 +14,7 @@ SRC += $(SRC_DIR)/events.c
 SRC += $(SRC_DIR)/complex_stuff.c
 OBJ = $(patsubst $(SRC_DIR)/%.c,$(OBJ_DIR)/%.o,$(SRC))
 CC = gcc 
-CFLAGS = 
+CFLAGS = -O3 -flto
 INCLUDES = -I$(MLX_INC) -I$(LIBFT_DIR)
 LIBS = -lmlx42 -ldl -lglfw -pthread -lm -L$(LIBFT_DIR) -L$(MLX_DIR)/build -lft 
 
