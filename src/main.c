@@ -6,7 +6,7 @@
 /*   By: sergei_pilman <sergei_pilman@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/14 19:08:10 by sergei_pilm       #+#    #+#             */
-/*   Updated: 2025/06/24 22:44:13 by sergei_pilm      ###   ########.fr       */
+/*   Updated: 2025/06/24 23:14:08 by sergei_pilm      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,12 +46,16 @@ int	main(void)
 	data.img = img;
 	data.min_real = -2.5;
 	data.max_real = 1.0;
-	data.min_imag = 1.25;
-	data.max_imag = -1.25;
+	data.min_imag = -1.25;
+	data.max_imag = 1.25;
 	data.zoom_factor = 1.0;
-	put_mandelbrot_fractal(mlx, img);
+	put_mandelbrot_fractal(&data);
 	mlx_loop_hook(mlx, ft_hook, &data);
 	mlx_scroll_hook(mlx, scroll_hook, &data);
 	mlx_loop(mlx);
 	return (EXIT_SUCCESS);
 }
+// double min_real = -2.5;
+// double max_real = 1.0;
+// double min_imag = -1.25;
+// double max_imag = 1.25;

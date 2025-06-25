@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: sergei_pilman <sergei_pilman@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/24 22:34:02 by sergei_pilm       #+#    #+#             */
-/*   Updated: 2025/06/24 22:51:19 by sergei_pilm      ###   ########.fr       */
+/*   Created: 2025/06/24 23:23:33 by sergei_pilm       #+#    #+#             */
+/*   Updated: 2025/06/24 23:24:23 by sergei_pilm      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,34 +16,38 @@ void ft_hook(void* param)
 {
 	t_data	*data; 
 	double	move_factor;
+	bool	should_redraw = false;
 
-	data = (t_data *)param;	
+	data = (t_data *)param;
+	move_factor = 0.05 * (data->max_real - data->min_real);
 	if (mlx_is_key_down(data->mlx, MLX_KEY_ESCAPE))
 		mlx_close_window(data->mlx);
 	if (mlx_is_key_down(data->mlx, MLX_KEY_UP))
 	{
 		data->min_imag -= move_factor;
 		data->max_imag -= move_factor;
-		put_mandelbrot_fractal(data);
+		should_redraw = true;
 	}
 	if (mlx_is_key_down(data->mlx, MLX_KEY_DOWN))
 	{
 		data->min_imag += move_factor;
 		data->max_imag += move_factor;
-		put_mandelbrot_fractal(data);
+		should_redraw = true;
 	}
 	if (mlx_is_key_down(data->mlx, MLX_KEY_LEFT))
 	{
-		data->min_imag -= move_factor;
-		data->max_imag -= move_factor;
-		put_mandelbrot_fractal(data);
+		data->min_real -= move_factor;
+		data->max_real -= move_factor;
+		should_redraw = true;
 	}
 	if (mlx_is_key_down(data->mlx, MLX_KEY_RIGHT))
 	{
 		data->min_real += move_factor;
 		data->max_real += move_factor;
-		put_mandelbrot_fractal(data);
+		should_redraw = true;
 	}
+	if (should_redraw)
+		put_mandelbrot_fractal(data);
 }
 
 void scroll_hook(double xdelta, double ydelta, void *param)
@@ -84,5 +88,5 @@ void scroll_hook(double xdelta, double ydelta, void *param)
 	}
 		
 	// Redraw fractal with new boundaries
-	put_fractal(data);
+	put_mandelbrot_fractal(data);
 }

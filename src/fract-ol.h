@@ -6,7 +6,7 @@
 /*   By: sergei_pilman <sergei_pilman@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/14 19:08:06 by sergei_pilm       #+#    #+#             */
-/*   Updated: 2025/06/24 22:47:57 by sergei_pilm      ###   ########.fr       */
+/*   Updated: 2025/06/24 23:30:00 by sergei_pilm      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,3 +64,6 @@ t_complex	zero();
 t_complex	add_complex(t_complex c1, t_complex c2);
 t_complex	multiply_complex(t_complex c1, t_complex c2);
 double		abs_complex(t_complex c); // |c| = sqrt(x**2 + y**2) гипотенуза на плоскости комплексных чисел по факту
+
+unsigned int	mandelbrot_iterations(double x, double y, unsigned int max_iter);
+uint32_t get_color(unsigned int iter, unsigned int max_iter);
