@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   events.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sergei_pilman <sergei_pilman@student.42    +#+  +:+       +#+        */
+/*   By: ebarbash <ebarbash@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/24 23:23:33 by sergei_pilm       #+#    #+#             */
-/*   Updated: 2025/06/24 23:24:23 by sergei_pilm      ###   ########.fr       */
+/*   Updated: 2025/06/25 12:02:45 by ebarbash         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,31 +19,31 @@ void ft_hook(void* param)
 	bool	should_redraw = false;
 
 	data = (t_data *)param;
-	move_factor = 0.05 * (data->max_real - data->min_real);
+	move_factor = 0.04 * (data->max_real - data->min_real);
 	if (mlx_is_key_down(data->mlx, MLX_KEY_ESCAPE))
 		mlx_close_window(data->mlx);
 	if (mlx_is_key_down(data->mlx, MLX_KEY_UP))
-	{
-		data->min_imag -= move_factor;
-		data->max_imag -= move_factor;
-		should_redraw = true;
-	}
-	if (mlx_is_key_down(data->mlx, MLX_KEY_DOWN))
 	{
 		data->min_imag += move_factor;
 		data->max_imag += move_factor;
 		should_redraw = true;
 	}
+	if (mlx_is_key_down(data->mlx, MLX_KEY_DOWN))
+	{
+		data->min_imag -= move_factor;
+		data->max_imag -= move_factor;
+		should_redraw = true;
+	}
 	if (mlx_is_key_down(data->mlx, MLX_KEY_LEFT))
 	{
-		data->min_real -= move_factor;
-		data->max_real -= move_factor;
+		data->min_real += move_factor;
+		data->max_real += move_factor;
 		should_redraw = true;
 	}
 	if (mlx_is_key_down(data->mlx, MLX_KEY_RIGHT))
 	{
-		data->min_real += move_factor;
-		data->max_real += move_factor;
+		data->min_real -= move_factor;
+		data->max_real -= move_factor;
 		should_redraw = true;
 	}
 	if (should_redraw)
