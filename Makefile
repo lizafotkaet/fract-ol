@@ -1,50 +1,57 @@
-NAME = fract-ol
-LIBFT_DIR = ./libft
-MLX_DIR = ./MLX42
-MLX_INC = $(MLX_DIR)/include
-MLX_LIB = $(MLX_DIR)/build/libmlx42.a
+NAME = fractol
+CC = gcc
+CFLAGS = -Wall -Wextra -Werror -Wunreachable-code -Ofast -fsanitize=leak
 
-LIBFT = $(LIBFT_DIR)/libft.a
+MLX42_PATH = ./MLX42
+LIBFT_PATH = ./libft
+MLX42_REPO = https://github.com/codam-coding-college/MLX42.git
+MLX42_VERSION = ce254c3
 
-SRC_DIR = src
-OBJ_DIR = obj
-SRC = $(SRC_DIR)/main.c 
-SRC += $(SRC_DIR)/fractal_stuff.c
-SRC += $(SRC_DIR)/events.c
-SRC += $(SRC_DIR)/complex_stuff.c
-OBJ = $(patsubst $(SRC_DIR)/%.c,$(OBJ_DIR)/%.o,$(SRC))
-CC = gcc 
-CFLAGS = -O3 -flto
-INCLUDES = -I$(MLX_INC) -I$(LIBFT_DIR)
-LIBS = -lmlx42 -ldl -lglfw -pthread -lm -L$(LIBFT_DIR) -L$(MLX_DIR)/build -lft 
+HEADERS = -I$(MLX42_PATH)/include -I$(LIBFT_PATH)
+LIBS = $(MLX42_PATH)/build/libmlx42.a $(LIBFT_PATH)/libft.a -ldl -lglfw -pthread -lm
 
-all: $(LIBFT) $(MLX_LIB) $(NAME)
+SRC_DIR = src/
+OBJ_DIR = obj/
+SRCS = main.c complex_stuff.c events.c fractals.c pixel_colors.c utils.c
+OBJS = $(addprefix $(OBJ_DIR), $(SRCS:.c=.o))
 
-$(LIBFT):
-	$(MAKE) -C $(LIBFT_DIR)
+all: mlx42 libft $(NAME)
 
-$(MLX_LIB):
-	$(MAKE) -C $(MLX_DIR)
+mlx42: $(MLX42_PATH)/build/libmlx42.a
+
+$(MLX42_PATH)/build/libmlx42.a:
+	@if [ ! -d "$(MLX42_PATH)" ]; then \
+		git clone $(MLX42_REPO) $(MLX42_PATH); \
+		cd $(MLX42_PATH) && git checkout $(MLX42_VERSION); \
+	fi
+	@mkdir -p $(MLX42_PATH)/build
+	@cd $(MLX42_PATH) && cmake -B build && cmake --build build -j4
+
+libft: $(LIBFT_PATH)/libft.a
+
+$(LIBFT_PATH)/libft.a:
+	@make all -C $(LIBFT_PATH)
 
 $(OBJ_DIR):
-	mkdir -p $(OBJ_DIR)
+	@mkdir -p $(OBJ_DIR)
 
-$(OBJ_DIR)/%.o: $(SRC_DIR)/%.c | $(OBJ_DIR)
-	$(CC) $(CFLAGS) $(INCLUDES) -O3 -c $< -o $@
+$(NAME): $(OBJ_DIR) $(OBJS)
+	$(CC) $(OBJS) $(LIBS) -o $(NAME)
 
-$(NAME): $(OBJ) $(LIBFT) $(MLX_LIB)
-	$(CC) $(CFLAGS) $(OBJ) $(LIBS) -o $(NAME)
+$(OBJ_DIR)%.o: $(SRC_DIR)%.c
+	$(CC) $(CFLAGS) $(HEADERS) -c $< -o $@
 
 clean:
-	rm -rf $(OBJ_DIR)
-	$(MAKE) -C $(LIBFT_DIR) clean
-	$(MAKE) -C $(MLX_DIR) clean
+	@make -C $(LIBFT_PATH) clean
+	@rm -f $(OBJS)
+	@rm -rf $(MLX42_PATH)/build
 
 fclean: clean
-	rm -f $(NAME)
-	$(MAKE) -C $(LIBFT_DIR) fclean
-	$(MAKE) -C $(MLX_DIR) fclean
+	@make -C $(LIBFT_PATH) fclean
+	@rm -f $(NAME)
+	@rm -rf $(MLX42_PATH)
+	@rm -rf $(OBJ_DIR)
 
 re: fclean all
 
-.PHONY: all clean fclean re
+.PHONY: all clean fclean re mlx42 libft

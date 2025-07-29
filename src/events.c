@@ -3,90 +3,88 @@
 /*                                                        :::      ::::::::   */
 /*   events.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ebarbash <ebarbash@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sergei_pilman <sergei_pilman@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/24 23:23:33 by sergei_pilm       #+#    #+#             */
-/*   Updated: 2025/06/25 12:02:45 by ebarbash         ###   ########.fr       */
+/*   Created: 2025/07/27 14:51:11 by sergei_pilm       #+#    #+#             */
+/*   Updated: 2025/07/29 04:02:13 by sergei_pilm      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fract-ol.h"
 
-void ft_hook(void* param)
+void	arrow_keys(int key, t_data *fractal)
 {
-	t_data	*data; 
-	double	move_factor;
-	bool	should_redraw = false;
+	double	h;
+	double	w;
 
-	data = (t_data *)param;
-	move_factor = 0.04 * (data->max_real - data->min_real);
-	if (mlx_is_key_down(data->mlx, MLX_KEY_ESCAPE))
-		mlx_close_window(data->mlx);
-	if (mlx_is_key_down(data->mlx, MLX_KEY_UP))
-	{
-		data->min_imag += move_factor;
-		data->max_imag += move_factor;
-		should_redraw = true;
-	}
-	if (mlx_is_key_down(data->mlx, MLX_KEY_DOWN))
-	{
-		data->min_imag -= move_factor;
-		data->max_imag -= move_factor;
-		should_redraw = true;
-	}
-	if (mlx_is_key_down(data->mlx, MLX_KEY_LEFT))
-	{
-		data->min_real += move_factor;
-		data->max_real += move_factor;
-		should_redraw = true;
-	}
-	if (mlx_is_key_down(data->mlx, MLX_KEY_RIGHT))
-	{
-		data->min_real -= move_factor;
-		data->max_real -= move_factor;
-		should_redraw = true;
-	}
-	if (should_redraw)
-		put_mandelbrot_fractal(data);
+	w = (fractal->limit->x * 2.0) * fractal->zoom_factor;
+	h = (fractal->limit->y * 2.0) * fractal->zoom_factor;
+	if (key == MLX_KEY_LEFT)
+		fractal->center->x += w * 0.02;
+	if (key == MLX_KEY_RIGHT)
+		fractal->center->x -= w * 0.02;
+	if (key == MLX_KEY_UP)
+		fractal->center->y -= h * 0.02;
+	if (key == MLX_KEY_DOWN)
+		fractal->center->y += h * 0.02;
 }
 
-void scroll_hook(double xdelta, double ydelta, void *param)
+void	key_hook(mlx_key_data_t keydata, void *param)
 {
-	t_data *data;
-	double zoom_intensity;
-	double mouse_re;
-	double mouse_im;
-		
-	data = (t_data *)param;
-	zoom_intensity = 0.1;
-		
-	// Get mouse position
-	int32_t mouse_x;
-	int32_t mouse_y;
-	mlx_get_mouse_pos(data->mlx, &mouse_x, &mouse_y);
-		
-	// Convert mouse position to complex plane coordinates
-	mouse_re = data->min_real + (double)mouse_x * (data->max_real - data->min_real) / data->mlx->width;
-	mouse_im = data->min_imag + (double)mouse_y * (data->max_imag - data->min_imag) / data->mlx->height;
-		
-	// Zoom in or out based on scroll direction
-	if (ydelta > 0) // Zoom in
-	{
-		// Adjust boundaries to zoom in toward mouse position
-		data->min_real = mouse_re - (1.0 - zoom_intensity) * (mouse_re - data->min_real);
-		data->max_real = mouse_re + (1.0 - zoom_intensity) * (data->max_real - mouse_re);
-		data->min_imag = mouse_im - (1.0 - zoom_intensity) * (mouse_im - data->min_imag);
-		data->max_imag = mouse_im + (1.0 - zoom_intensity) * (data->max_imag - mouse_im);
-	}
-	else if (ydelta < 0) // Zoom out
-	{
-		// Adjust boundaries to zoom out from mouse position
-		data->min_real = mouse_re - (1.0 + zoom_intensity) * (mouse_re - data->min_real);
-		data->max_real = mouse_re + (1.0 + zoom_intensity) * (data->max_real - mouse_re);
-		data->min_imag = mouse_im - (1.0 + zoom_intensity) * (mouse_im - data->min_imag);
-		data->max_imag = mouse_im + (1.0 + zoom_intensity) * (data->max_imag - mouse_im);
-	}
-		
-	// Redraw fractal with new boundaries
-	put_mandelbrot_fractal(data);
+	t_data	*fractal;
+
+	fractal = (t_data *)param;
+	if (keydata.key == MLX_KEY_C && keydata.action == MLX_RELEASE)
+		fractal->palette = &fractal->palette[fractal->palette_index++ % fractal->palette_len];
+}
+
+void	scroll_hook(double xdelta, double ydelta, void *param)
+{
+	t_data		*fractal;
+	int32_t		mouse_x;
+	int32_t		mouse_y;
+	double		movex;
+	double		movey;
+
+	fractal = (t_data *)param;
+	(void)xdelta;
+	mlx_get_mouse_pos(fractal->mlx, &mouse_x, &mouse_y);
+	if (mouse_x < 0 || mouse_x >= SIZE || mouse_y < 0 || mouse_y >= SIZE)
+		return ;
+	movex = (mouse_x - SIZE / 2.0) * fractal->zoom_factor / SIZE;
+	movey = (mouse_y - SIZE / 2.0) * fractal->zoom_factor / SIZE;
+	if (ydelta > 0)
+		fractal->zoom_factor *= 1.1;
+	else if (ydelta < 0)
+		fractal->zoom_factor /= 1.1;
+	fractal->center->x += movex - (mouse_x - SIZE / 2.0) * fractal->zoom_factor / SIZE;
+	fractal->center->y += movey - (mouse_y - SIZE / 2.0) * fractal->zoom_factor / SIZE;
+}
+
+void	get_hook(void *param)
+{
+	t_data	*fractal;
+
+	fractal = param;
+	if (mlx_is_key_down(fractal->mlx, MLX_KEY_ESCAPE))
+		mlx_close_window(fractal->mlx);
+	if (mlx_is_key_down(fractal->mlx, MLX_KEY_I))
+		fractal->max_iter = (fractal->max_iter * 1.1) + 1;
+	if (mlx_is_key_down(fractal->mlx, MLX_KEY_D))
+		fractal->max_iter /= 1.1;
+	if (mlx_is_key_down(fractal->mlx, MLX_KEY_Z))
+		fractal->zoom_factor *= 1.1;
+	if (mlx_is_key_down(fractal->mlx, MLX_KEY_X))
+		fractal->zoom_factor /= 1.1;
+	if (mlx_is_key_down(fractal->mlx, MLX_KEY_DOWN))
+		arrow_keys(MLX_KEY_DOWN, fractal);
+	if (mlx_is_key_down(fractal->mlx, MLX_KEY_UP))
+		arrow_keys(MLX_KEY_UP, fractal);
+	if (mlx_is_key_down(fractal->mlx, MLX_KEY_RIGHT))
+		arrow_keys(MLX_KEY_RIGHT, fractal);
+	if (mlx_is_key_down(fractal->mlx, MLX_KEY_LEFT))
+		arrow_keys(MLX_KEY_LEFT, fractal);
+	mlx_scroll_hook(fractal->mlx, &scroll_hook, fractal);
+	mlx_key_hook(fractal->mlx, &key_hook, fractal);
+	draw_fractal(fractal);
 }

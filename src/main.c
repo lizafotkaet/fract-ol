@@ -5,57 +5,87 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: sergei_pilman <sergei_pilman@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/14 19:08:10 by sergei_pilm       #+#    #+#             */
-/*   Updated: 2025/06/24 23:14:08 by sergei_pilm      ###   ########.fr       */
+/*   Created: 2025/07/26 01:04:20 by sergei_pilm       #+#    #+#             */
+/*   Updated: 2025/07/29 03:43:31 by sergei_pilm      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fract-ol.h"
 
-int	error_check(mlx_t **mlx, mlx_image_t **img)
+void	fract_data_init(t_data *fractal)
 {
-	if (!(*mlx = mlx_init(WIDTH, HEIGHT, "fract-ol", true)))
-	{
-		ft_printf("%s\n", mlx_strerror(mlx_errno));
-		return(EXIT_FAILURE);
-	}
-	if (!(*img = mlx_new_image(*mlx, WIDTH, HEIGHT)))
-	{
-		mlx_close_window(*mlx);
-		ft_printf("%s\n", mlx_strerror(mlx_errno));
-		return(EXIT_FAILURE);
-	}
-	if (mlx_image_to_window(*mlx, *img, 0, 0) == -1)
-	{
-		mlx_close_window(*mlx);
-		ft_printf("%s\n", mlx_strerror(mlx_errno));
-		return(EXIT_FAILURE);
-	}
-	return (EXIT_SUCCESS);
+	fractal->palette = get_palettes();
+	fractal->palette_index = 0;
+	fractal->palette = &fractal->palette[0];
+	fractal->palette_len = pallete_len(fractal);
+	fractal->smooth = false;
+	fractal->limit->x = -2;
+	fractal->limit->y = 2;
+	fractal->max_iter = 35;
+	fractal->center->x = -0.5;
+	fractal->center->y = 0;
+	fractal->zoom_factor = 3.5;
+	if (fractal->type == 2)
+		zero(fractal->center);
 }
 
-int	main(void)
+void	init_image(t_data *fractal)
 {
-	mlx_t		*mlx = NULL;
-	mlx_image_t	*img = NULL;
-	t_data		data;
-	
-	if (error_check(&mlx, &img))
-		return (EXIT_FAILURE);
-	data.mlx = mlx;
-	data.img = img;
-	data.min_real = -2.5;
-	data.max_real = 1.0;
-	data.min_imag = -1.25;
-	data.max_imag = 1.25;
-	data.zoom_factor = 1.0;
-	put_mandelbrot_fractal(&data);
-	mlx_loop_hook(mlx, ft_hook, &data);
-	mlx_scroll_hook(mlx, scroll_hook, &data);
-	mlx_loop(mlx);
-	return (EXIT_SUCCESS);
+	fractal->mlx = mlx_init(SIZE, SIZE, fract_name(fractal->type), false);
+	if (!fractal->mlx)
+	{
+		error_exit(fractal, MLX_ERR);
+	}
+	fractal->img = mlx_new_image(fractal->mlx, SIZE, SIZE);
+	if (!fractal->img)
+	{
+		error_exit(fractal, IMG_ERR);
+	}
+	draw_fractal(fractal);
+	mlx_image_to_window(fractal->mlx, fractal->img, 0, 0);
+	mlx_loop_hook(fractal->mlx, &get_hook, fractal);
+	mlx_loop(fractal->mlx);
 }
-// double min_real = -2.5;
-// double max_real = 1.0;
-// double min_imag = -1.25;
-// double max_imag = 1.25;
+	
+void	check_input(int argc, char** argv, t_data *fractal, int *error)
+{
+	if (argc == 2 && ft_atoi(argv[1], error) == 1)
+	{
+		fractal->type = 1;
+	}
+	else if (argc == 2 && ft_atoi(argv[1], error) == 2)
+	{
+		fractal->type = 2;
+		fractal->constant->x = C_REAL;
+		fractal->constant->y = C_IMAG;
+	}
+	else if (argc == 4 && ft_atoi(argv[1], error) == 2)
+	{
+		fractal->type = 2;
+		fractal->constant->x = ft_atof(argv[2]);
+		fractal->constant->y = ft_atof(argv[3]);
+	}
+	else
+	{
+		use_msg(fractal);
+	}
+}
+
+int	main(int argc, char **argv)
+{
+	t_data		*fractal = NULL;
+	int			error;
+	
+	error = 0;
+	fractal = NULL;
+	ft_printf("Starting...\n");
+	ft_malloc(&fractal);
+	ft_printf("Memory allocated\n");
+	check_input(argc, argv, fractal, &error);
+	ft_printf("Input checked: type=%d\n", fractal->type);
+	fract_data_init(fractal);
+	ft_printf("Fractal data initialized\n");
+	init_image(fractal);
+	ft_printf("Image initialized\n");
+	return (0);
+}

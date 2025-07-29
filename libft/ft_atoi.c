@@ -6,13 +6,12 @@
 /*   By: sergei_pilman <sergei_pilman@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/13 18:39:10 by ebarbash          #+#    #+#             */
-/*   Updated: 2025/03/24 00:33:51 by sergei_pilm      ###   ########.fr       */
+/*   Updated: 2025/07/29 01:54:36 by sergei_pilm      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
 #include "libft.h"
-#include <stdio.h>
 
 int	ft_atoi(const char *nptr, int *error)
 {
