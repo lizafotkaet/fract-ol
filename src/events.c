@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   events.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sergei_pilman <sergei_pilman@student.42    +#+  +:+       +#+        */
+/*   By: ebarbash <ebarbash@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/27 14:51:11 by sergei_pilm       #+#    #+#             */
-/*   Updated: 2025/07/29 04:02:13 by sergei_pilm      ###   ########.fr       */
+/*   Updated: 2025/07/29 11:40:44 by ebarbash         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,8 @@ void	key_hook(mlx_key_data_t keydata, void *param)
 
 	fractal = (t_data *)param;
 	if (keydata.key == MLX_KEY_C && keydata.action == MLX_RELEASE)
-		fractal->palette = &fractal->palette[fractal->palette_index++ % fractal->palette_len];
+		fractal->palette = &fractal->palette[fractal->palette_index++
+			% fractal->palette_len];
 }
 
 void	scroll_hook(double xdelta, double ydelta, void *param)
@@ -57,8 +58,10 @@ void	scroll_hook(double xdelta, double ydelta, void *param)
 		fractal->zoom_factor *= 1.1;
 	else if (ydelta < 0)
 		fractal->zoom_factor /= 1.1;
-	fractal->center->x += movex - (mouse_x - SIZE / 2.0) * fractal->zoom_factor / SIZE;
-	fractal->center->y += movey - (mouse_y - SIZE / 2.0) * fractal->zoom_factor / SIZE;
+	fractal->center->x += movex - (mouse_x - SIZE
+			/ 2.0) * fractal->zoom_factor / SIZE;
+	fractal->center->y += movey - (mouse_y - SIZE
+			/ 2.0) * fractal->zoom_factor / SIZE;
 }
 
 void	get_hook(void *param)

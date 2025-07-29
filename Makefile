@@ -1,6 +1,6 @@
 NAME = fractol
 CC = gcc
-CFLAGS = -Wall -Wextra -Werror -Wunreachable-code -Ofast -fsanitize=leak
+CFLAGS = -Wall -Wextra -Werror -Wunreachable-code -Ofast #-fsanitize=leak
 
 MLX42_PATH = ./MLX42
 LIBFT_PATH = ./libft
@@ -12,7 +12,7 @@ LIBS = $(MLX42_PATH)/build/libmlx42.a $(LIBFT_PATH)/libft.a -ldl -lglfw -pthread
 
 SRC_DIR = src/
 OBJ_DIR = obj/
-SRCS = main.c complex_stuff.c events.c fractals.c pixel_colors.c utils.c
+SRCS = main.c complex_stuff.c events.c fractals.c pixel.c colors.c utils.c mem_fts.c
 OBJS = $(addprefix $(OBJ_DIR), $(SRCS:.c=.o))
 
 all: mlx42 libft $(NAME)

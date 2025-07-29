@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sergei_pilman <sergei_pilman@student.42    +#+  +:+       +#+        */
+/*   By: ebarbash <ebarbash@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/26 01:04:20 by sergei_pilm       #+#    #+#             */
-/*   Updated: 2025/07/29 03:43:31 by sergei_pilm      ###   ########.fr       */
+/*   Updated: 2025/07/29 12:07:40 by ebarbash         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,8 +46,8 @@ void	init_image(t_data *fractal)
 	mlx_loop_hook(fractal->mlx, &get_hook, fractal);
 	mlx_loop(fractal->mlx);
 }
-	
-void	check_input(int argc, char** argv, t_data *fractal, int *error)
+
+void	check_input(int argc, char **argv, t_data *fractal, int *error)
 {
 	if (argc == 2 && ft_atoi(argv[1], error) == 1)
 	{
@@ -73,9 +73,9 @@ void	check_input(int argc, char** argv, t_data *fractal, int *error)
 
 int	main(int argc, char **argv)
 {
-	t_data		*fractal = NULL;
+	t_data		*fractal;
 	int			error;
-	
+
 	error = 0;
 	fractal = NULL;
 	ft_printf("Starting...\n");

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fractals.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sergei_pilman <sergei_pilman@student.42    +#+  +:+       +#+        */
+/*   By: ebarbash <ebarbash@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/27 14:51:45 by sergei_pilm       #+#    #+#             */
-/*   Updated: 2025/07/29 04:06:57 by sergei_pilm      ###   ########.fr       */
+/*   Updated: 2025/07/29 11:44:31 by ebarbash         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,10 @@ void	mandelbrot(t_data *fractal)
 	t_complex	z_curr;
 	double		curr_abs;
 
-	fractal->constant->x = (fractal->pixel->x - SIZE / 2.0f) * fractal->zoom_factor / SIZE + fractal->center->x;
-	fractal->constant->y = (fractal->pixel->y - SIZE / 2.0f) * fractal->zoom_factor / SIZE + fractal->center->y;
+	fractal->constant->x = (fractal->pixel->x - SIZE
+			/ 2.0f) * fractal->zoom_factor / SIZE + fractal->center->x;
+	fractal->constant->y = (fractal->pixel->y - SIZE
+			/ 2.0f) * fractal->zoom_factor / SIZE + fractal->center->y;
 	fractal->iter = 0;
 	z_curr.x = 0;
 	z_curr.y = 0;
@@ -59,8 +61,10 @@ void	julia(t_data *fractal)
 	t_complex	z_curr;
 	double		curr_abs;
 
-	z_curr.x = (fractal->pixel->x - SIZE / 2.0f) * fractal->zoom_factor / SIZE + fractal->center->x;
-	z_curr.y = (fractal->pixel->y - SIZE / 2.0f) * fractal->zoom_factor / SIZE + fractal->center->y;
+	z_curr.x = (fractal->pixel->x - SIZE
+			/ 2.0f) * fractal->zoom_factor / SIZE + fractal->center->x;
+	z_curr.y = (fractal->pixel->y - SIZE
+			/ 2.0f) * fractal->zoom_factor / SIZE + fractal->center->y;
 	fractal->iter = 0;
 	curr_abs = abs_complex(z_curr);
 	while (fractal->iter <= fractal->max_iter)

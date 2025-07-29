@@ -1,38 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pixel_colors.c                                     :+:      :+:    :+:   */
+/*   pixel.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sergei_pilman <sergei_pilman@student.42    +#+  +:+       +#+        */
+/*   By: ebarbash <ebarbash@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/27 20:03:19 by sergei_pilm       #+#    #+#             */
-/*   Updated: 2025/07/29 04:04:26 by sergei_pilm      ###   ########.fr       */
+/*   Created: 2025/07/29 11:48:25 by ebarbash          #+#    #+#             */
+/*   Updated: 2025/07/29 12:09:03 by ebarbash         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fract-ol.h"
 
-static int	ft_lerpi(int first, int second, double p)
+static int	get_rgba(int r, int g, int b, int a)
 {
-	if (first == second)
-		return (first);
-	return ((int)((double)first + (second - first) * p));
+	return (r << 24 | g << 16 | b << 8 | a);
 }
 
-static t_color	clerp(t_color c1, t_color c2, double p)
-{
-	t_color	c;
-
-	if (c1.value == c2.value)
-		return (c1);
-	c.rgba.r = (char)ft_lerpi((int)c1.rgba.r, (int)c2.rgba.r, p);
-	c.rgba.g = (char)ft_lerpi((int)c1.rgba.g, (int)c2.rgba.g, p);
-	c.rgba.b = (char)ft_lerpi((int)c1.rgba.b, (int)c2.rgba.b, p);
-	c.rgba.a = (char)0xFF;
-	return (c);
-}
-
-static t_color	linear_color(double i, int max, t_palette *p)
+t_color	linear_color(double i, int max, t_palette *p)
 {
 	double		index;
 	double		adjust;
@@ -49,25 +34,23 @@ static t_color	linear_color(double i, int max, t_palette *p)
 		(int)(adjust + 1) - adjust));
 }
 
-static int	get_rgba(int r, int g, int b, int a)
-{
-	return (r << 24 | g << 16 | b << 8 | a);
-}
-
 void	put_pixel(t_data *fractal)
 {
-	t_color	col_struct; //
+	t_color	col_struct;
 	int		color;
 
 	if (fractal->iter >= fractal->max_iter)
-		mlx_put_pixel(fractal->img, fractal->pixel->x, fractal->pixel->y, 0x000000FF);
+		mlx_put_pixel(fractal->img,
+			fractal->pixel->x, fractal->pixel->y, 0x000000FF);
 	else
 	{
-		col_struct = get_color_struct(fractal);
+		col_struct = linear_color(fractal->iter,
+				fractal->max_iter, fractal->palette);
 		color = get_rgba(col_struct.rgba.r,
 				col_struct.rgba.g,
 				col_struct.rgba.b, col_struct.rgba.a);
-		mlx_put_pixel(fractal->img, fractal->pixel->x, fractal->pixel->y, color);
+		mlx_put_pixel(fractal->img,
+			fractal->pixel->x, fractal->pixel->y, color);
 	}
 }
 
@@ -92,9 +75,4 @@ int	pallete_len(t_data *fractal)
 	while (fractal->palette[i].count)
 		i++;
 	return (i);
-}
-
-t_color	get_color_struct(t_data *fractal)
-{
-	return (linear_color(fractal->iter, fractal->max_iter, fractal->palette));
 }

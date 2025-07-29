@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fract-ol.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sergei_pilman <sergei_pilman@student.42    +#+  +:+       +#+        */
+/*   By: ebarbash <ebarbash@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/14 19:08:06 by sergei_pilm       #+#    #+#             */
-/*   Updated: 2025/07/29 03:24:51 by sergei_pilm      ###   ########.fr       */
+/*   Updated: 2025/07/29 12:06:08 by ebarbash         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@
 
 #define SIZE 750
 #define C_REAL -0.8
-#define C_IMAG 0.156
+#define C_IMAG 0.15
 #define MLX_ERR 5
 #define IMG_ERR 6
 
@@ -73,7 +73,7 @@ typedef struct s_data
 	double		zoom_factor;
 }	t_data;
 
-enum 
+enum
 {
 	ON_KEYDOWN = 2,
 	ON_KEYUP = 3,
@@ -85,10 +85,10 @@ enum
 };
 
 // init fts
-void		check_input(int argc, char** argv, t_data *fractal, int *error);
+void		check_input(int argc, char **argv, t_data *fractal, int *error);
 void		init_image(t_data *fractal);
 // complex nums operations:
-t_complex	*zero();
+t_complex	*zero(t_complex *c);
 t_complex	add_complex(t_complex c1, t_complex *c2);
 t_complex	multiply_complex(t_complex *c1, t_complex *c2);
 t_complex	sqr_complex(t_complex c);
@@ -108,13 +108,17 @@ void		julia(t_data *fractal);
 //colors stuff
 void		put_pixel(t_data *fractal);
 int			pallete_len(t_data *fractal);
+t_color		linear_color(double i, int max, t_palette *p);
 t_palette	*get_palettes(void);
 int			pallete_len(t_data *fractal);
 t_color		get_color_struct(t_data *fractal);
-// utils
+int			ft_lerpi(int first, int second, double p);
+t_color		clerp(t_color c1, t_color c2, double p);
+// utils/memory handling
 void		use_msg(t_data *fractal);
 void		error_exit(t_data *fractal, int err);
 char		*fract_name(int type);
 void		ft_malloc(t_data **fractal);
-void 		ft_free(t_data *fractal);
+void		ft_malloc_null(t_data **fractal);
+void		ft_free(t_data *fractal);
 void		terminate(t_data *fractal);
